@@ -1,0 +1,329 @@
+{
+  "_comment": "二狗工具定义（唯一来源）。各端实现时保持 name、parameters 一致。",
+  "tools": [
+    {
+      "name": "add_expense",
+      "description": "记一笔账到Next后端。支持金额、标签、币种和描述",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "amount": { "type": "number", "description": "金额" },
+          "notes": { "type": "string", "description": "消费描述/备注" },
+          "tags": { "type": "string", "description": "标签，逗号分隔，如'餐饮,外卖'" },
+          "currency": { "type": "string", "enum": ["CAD", "CNY", "USD"], "description": "币种，默认CAD" },
+          "date": { "type": "string", "description": "日期 YYYY-MM-DD，默认今天" }
+        },
+        "required": ["amount"]
+      }
+    },
+    {
+      "name": "expense_summary",
+      "description": "查询月度记账汇总",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "month": { "type": "string", "description": "月份 YYYY-MM，默认当月" },
+          "currency": { "type": "string", "description": "币种筛选" }
+        }
+      }
+    },
+    {
+      "name": "query_expenses",
+      "description": "查询记账记录列表",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "month": { "type": "string", "description": "月份 YYYY-MM" },
+          "tag": { "type": "string", "description": "标签筛选" },
+          "limit": { "type": "number", "description": "返回条数，默认20" }
+        }
+      }
+    },
+    {
+      "name": "delete_expense",
+      "description": "删除一笔记账记录（需确认）",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "记账条目ID" }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "add_task",
+      "description": "添加待办任务",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "description": "任务标题" },
+          "priority": { "type": "string", "enum": ["low", "medium", "high", "urgent"], "description": "优先级" },
+          "due_date": { "type": "string", "description": "截止日期 YYYY-MM-DD" }
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "list_tasks",
+      "description": "列出待办任务",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["active", "completed", "all"], "description": "状态筛选" }
+        }
+      }
+    },
+    {
+      "name": "complete_task",
+      "description": "标记任务完成",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "任务ID" }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "update_task",
+      "description": "更新任务信息",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "任务ID" },
+          "title": { "type": "string", "description": "新标题" },
+          "priority": { "type": "string", "description": "新优先级" },
+          "due_date": { "type": "string", "description": "新截止日期" }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "delete_task",
+      "description": "删除任务（需确认）",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "任务ID" }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "create_trip",
+      "description": "新建差旅行程",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "description": "行程标题" },
+          "destination": { "type": "string", "description": "目的地" },
+          "start_date": { "type": "string", "description": "开始日期" },
+          "end_date": { "type": "string", "description": "结束日期" }
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "add_trip_item",
+      "description": "添加差旅费用项",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "trip_id": { "type": "string", "description": "行程ID" },
+          "amount": { "type": "number", "description": "金额" },
+          "category": { "type": "string", "description": "类别" },
+          "notes": { "type": "string", "description": "备注" }
+        },
+        "required": ["trip_id", "amount"]
+      }
+    },
+    {
+      "name": "query_trips",
+      "description": "查询差旅记录",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "trip_summary",
+      "description": "差旅费用汇总",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "trip_id": { "type": "string", "description": "行程ID" }
+        },
+        "required": ["trip_id"]
+      }
+    },
+    {
+      "name": "get_date_time",
+      "description": "获取当前日期和时间",
+      "backend": "本地",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "simple_calculate",
+      "description": "简单数学计算",
+      "backend": "本地",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "expression": { "type": "string", "description": "数学表达式，如 '100 * 1.13'" }
+        },
+        "required": ["expression"]
+      }
+    },
+    {
+      "name": "save_memory",
+      "description": "保存记忆",
+      "backend": "本地 RDB",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "category": { "type": "string", "enum": ["fact", "habit", "personality", "intent"], "description": "记忆类别" },
+          "content": { "type": "string", "description": "记忆内容" }
+        },
+        "required": ["category", "content"]
+      }
+    },
+    {
+      "name": "search_memory",
+      "description": "搜索记忆",
+      "backend": "本地 RDB",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "搜索关键词" }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "set_reminder",
+      "description": "设置提醒",
+      "backend": "本地",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string", "description": "提醒内容" },
+          "time": { "type": "string", "description": "提醒时间" }
+        },
+        "required": ["content", "time"]
+      }
+    },
+    {
+      "name": "translate",
+      "description": "翻译文本",
+      "backend": "LLM",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "description": "要翻译的文本" },
+          "target_lang": { "type": "string", "description": "目标语言，默认英文" }
+        },
+        "required": ["text"]
+      }
+    },
+    {
+      "name": "web_search",
+      "description": "网络搜索",
+      "backend": "搜索 API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "搜索关键词" }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "add_review",
+      "description": "添加例行习惯",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "description": "例行标题" },
+          "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly"], "description": "频率，默认daily" }
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "query_reviews",
+      "description": "查询例行习惯列表",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "frequency": { "type": "string", "description": "按频率筛选" }
+        }
+      }
+    },
+    {
+      "name": "query_health",
+      "description": "查询养生功法（八段锦/易筋经/站桩/穴位）",
+      "backend": "本地",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": { "type": "string", "description": "养生话题" }
+        },
+        "required": ["topic"]
+      }
+    },
+    {
+      "name": "recommend_health",
+      "description": "根据身体不适推荐养生功法",
+      "backend": "本地",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "symptom": { "type": "string", "description": "症状描述" }
+        },
+        "required": ["symptom"]
+      }
+    },
+    {
+      "name": "generate_english_scenario",
+      "description": "生成英语学习场景",
+      "backend": "LLM",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": { "type": "string", "description": "场景主题" },
+          "difficulty": { "type": "string", "enum": ["beginner", "intermediate", "advanced"], "description": "难度" }
+        },
+        "required": ["topic"]
+      }
+    },
+    {
+      "name": "query_scenarios",
+      "description": "查询英语学习场景",
+      "backend": "Next API",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "limit": { "type": "number", "description": "返回条数" }
+        }
+      }
+    }
+  ]
+}
