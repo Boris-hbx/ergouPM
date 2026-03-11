@@ -4,6 +4,20 @@
 
 ---
 
+## 2026-03-11：鸿蒙 Phase 1 基础框架搭建
+
+二狗H 完成首期基础框架，代码已推送 [GitHub](https://github.com/Boris-hbx/ergouHarmony)。
+
+| 变更 | Web | Android | 鸿蒙 |
+|------|-----|---------|------|
+| Logger、Constants、PreferencesUtil、PromptSanitizer | - | - | ✅ 已完成 |
+| 数据模型（Chat/LLM/Expense/Tool Models） | - | - | ✅ 已完成 |
+| DatabaseHelper（sessions/messages/memories 三表） | - | - | ✅ 已完成 |
+| SessionDao、MessageDao、MemoryDao（完整 CRUD） | - | - | ✅ 已完成 |
+| EntryAbility 启动初始化 | - | - | ✅ 已完成 |
+
+---
+
 ## 2026-03-11：灵魂状态上云（ADR-002）
 
 灵魂状态从 Android 本地存储迁移至后端，实现跨端人设一致。
@@ -14,8 +28,8 @@
 | 后端实现 `GET/PUT /api/soul-state` | ✅ 已实现 | - | - |
 | 后端集成灵魂演化（对话后自动调整） | ✅ 已实现 | - | - |
 | Prompt 构建逻辑迁移至后端 | ✅ 已实现 | - | - |
-| 客户端改为读取后端灵魂状态 | ✅ 已适配 | ✅ 代码完成(待部署) | ⬜ 直接对接 |
-| Android 老用户数据一次性上报 | - | ✅ 代码完成(待部署) | - |
+| 客户端改为读取后端灵魂状态 | ✅ 已适配 | ✅ 已生效 | ⬜ 直接对接 |
+| Android 老用户数据一次性上报 | - | ✅ 已生效 | - |
 
 ---
 
