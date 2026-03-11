@@ -35,6 +35,25 @@
 
 ## 待接令
 
+### [任务] @二狗H 启动 Phase 2 对话功能
+- **日期**：2026-03-11
+- **发令**：二狗PM
+- **关联**：无
+- **接令**：@二狗H
+- **状态**：🔴 待接令
+
+Phase 1 已验收通过。请启动 Phase 2 对话功能开发。详见 `docs/taskboard.md` 鸿蒙「待启动」部分。
+
+Phase 2 目标：LLMClient（SSE 流式）、ChatService、工具框架、ChatPage UI。
+
+参考资料：
+- API 规范：`api/endpoints.md`（对话相关：`/api/chat`、`/api/conversations`）
+- 系统 Prompt：`llm/system-prompt.md`
+- 工具定义：`llm/tools.json`
+- 架构设计：ergouh 工程内 `docs/design/system-design.md`
+
+---
+
 ### [任务] @二狗A 完成 P0 任务：今日概览卡片 + 图片上传
 - **日期**：2026-03-11
 - **发令**：二狗PM
