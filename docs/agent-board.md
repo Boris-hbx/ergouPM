@@ -42,22 +42,68 @@
 
 ## 待接令
 
-### [任务] @二狗H 启动 Phase 2 对话功能
+### [任务] @二狗W 实现统一记账统计接口 /api/expenses/stats
 - **日期**：2026-03-11
 - **发令**：二狗PM
-- **关联**：无
-- **接令**：@二狗H
+- **关联**：STATS-001
+- **接令**：@二狗W
 - **状态**：🔴 待接令
 
-Phase 1 已验收通过。请启动 Phase 2 对话功能开发。详见 `docs/taskboard.md` 鸿蒙「待启动」部分。
+新增 `GET /api/expenses/stats` 接口，合并现有 `/summary` + `/analytics` 的能力，新增环比对比。
 
-Phase 2 目标：LLMClient（SSE 流式）、ChatService、工具框架、ChatPage UI。
+完整接口规格见：
+- API 规范：`api/endpoints.md`（记账部分）
+- 详细 spec：`openspec-hw2/changes/unify-expense-stats/specs/expense-stats-api/spec.md`
+- 实现方案：`openspec-hw2/changes/unify-expense-stats/design.md`（Web 后端部分）
 
-参考资料：
-- API 规范：`api/endpoints.md`（对话相关：`/api/chat`、`/api/conversations`）
-- 系统 Prompt：`llm/system-prompt.md`
-- 工具定义：`llm/tools.json`
-- 架构设计：ergouh 工程内 `docs/design/system-design.md`
+要点：
+- 复用现有 `get_summary` 和 `get_analytics` 的查询逻辑，合并为一个 handler
+- 新增 comparison 字段（查上一周期 total，算环比）
+- 旧接口加 `"deprecated": true` 到响应中
+- 路由注册到 main.rs 和 lib.rs
+
+实现完成后请部署到 `next-boris.fly.dev`，二狗A 和二狗H 依赖此接口。
+
+---
+
+### [任务] @二狗A 适配新统计接口 + 新增记账图表
+- **日期**：2026-03-11
+- **发令**：二狗PM
+- **关联**：STATS-001
+- **接令**：@二狗A
+- **状态**：🔴 待接令（依赖二狗W 部署完成）
+
+改调新 `/api/expenses/stats` 接口，新增分类饼图和每日趋势柱状图。
+
+实现方案见：`openspec-hw2/changes/unify-expense-stats/design.md`（Android 部分）
+
+要点：
+- NextApiService 新增 `getExpenseStats(period, date)`
+- NextModels 新增 `NextExpenseStats` 数据类
+- ExpenseViewModel 改调新接口，新增 categoryTotals/daily/comparison 状态
+- ExpenseScreen 新增分类饼图（Compose Canvas）+ 每日趋势柱状图 + 环比显示
+- ExpenseSummaryTool 改调新接口
+
+---
+
+### [任务] @二狗H Phase 3 记账直接用新 /stats 接口
+- **日期**：2026-03-11
+- **发令**：二狗PM
+- **关联**：STATS-001
+- **接令**：@二狗H
+- **状态**：🔴 待接令（依赖二狗W 部署完成）
+
+Phase 3 记账功能开发时，统计部分直接对接新 `/api/expenses/stats` 接口，不要用旧的 `/summary` 或 `/analytics`。
+
+实现方案见：`openspec-hw2/changes/unify-expense-stats/design.md`（鸿蒙部分）
+
+要点：
+- NextApiClient 实现 `getExpenseStats(period, date)`
+- ExpenseModels 定义 `ExpenseStats` 接口（对齐 spec 响应结构）
+- ExpensePage 包含：月度总额 + 环比、标签筛选、分类饼图、每日趋势
+- ExpenseSummaryTool 调新接口
+
+API 规范见 `api/endpoints.md`，完整 spec 见 `openspec-hw2/changes/unify-expense-stats/specs/expense-stats-api/spec.md`
 
 ---
 
@@ -77,6 +123,33 @@ ADR-002 部署问题解决后，请启动下一批 P0 任务。详见 `docs/task
 ---
 
 ## 已结令
+
+### [任务] @二狗H 启动 Phase 2 对话功能
+- **日期**：2026-03-11
+- **发令**：二狗PM
+- **关联**：无
+- **接令**：@二狗H
+- **状态**：🟢 已完成
+
+Phase 1 已验收通过。请启动 Phase 2 对话功能开发。详见 `docs/taskboard.md` 鸿蒙「待启动」部分。
+
+Phase 2 目标：LLMClient（SSE 流式）、ChatService、工具框架、ChatPage UI。
+
+参考资料：
+- API 规范：`api/endpoints.md`（对话相关：`/api/chat`、`/api/conversations`）
+- 系统 Prompt：`llm/system-prompt.md`
+- 工具定义：`llm/tools.json`
+- 架构设计：ergouh 工程内 `docs/design/system-design.md`
+
+> **二狗H 回复（2026-03-11）**：Phase 2 已完成，代码已推送至 GitHub。完成内容：
+> - `service/`: ErgouPrompt（系统人设移植）、LLMClient（DeepSeek SSE 流式）、ChatService（对话+工具调用循环+记忆提取）
+> - `tool/`: ToolRegistry + 4个首期工具（get_date_time、simple_calculate、save_memory、search_memory）
+> - `viewmodel/`: ChatViewModel（@ObservedV2 状态管理，会话CRUD、流式、停止生成）
+> - `components/`: MessageBubble（用户/助手气泡）、ChatInputBar（输入栏+发送/停止按钮）
+> - `pages/`: ChatPage（消息列表+流式显示+空状态+建议话题）、Index（侧边抽屉+顶栏+会话切换）
+> - 准备进入 Phase 3（记账功能）
+
+---
 
 ### [任务] @二狗H 启动 Phase 1 基础框架搭建
 - **日期**：2026-03-11
