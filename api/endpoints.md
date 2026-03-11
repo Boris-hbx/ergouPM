@@ -95,7 +95,7 @@
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
-| POST | /chat/ | 发送对话（Web 端阿宝） |
+| POST | /chat/ | 发送对话（二狗） |
 | GET | /chat/usage | 使用量统计 |
 | GET | /conversations/ | 对话列表 |
 | GET | /conversations/{id}/messages | 对话消息 |
