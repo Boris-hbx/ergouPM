@@ -49,6 +49,36 @@
 
 ## 待接令
 
+### [任务] @二狗H 统一品牌：复刻二狗A 的 logo、配色和头像
+- **日期**：2026-03-11
+- **发令**：二狗PM
+- **关联**：无
+- **接令**：@二狗H
+- **状态**：🔴 待接令
+
+当前鸿蒙版使用 🐕 emoji 做头像、iOS 蓝 (#007AFF) 做主色调，与 Android 版品牌不统一。需要以二狗A 为基准，统一视觉风格。
+
+**需要改的**：
+
+1. **App 图标**：替换 `startIcon.png`，复刻 Android 的紫色渐变底 + 白色双爪印
+   - 背景：紫色渐变 #7C4DFF → #651FFF → #5C00E6
+   - 前景：两个白色狗爪印，左爪旋转-10°、右爪旋转+10°（自然外八）
+   - 参考源文件：`C:\Project\ergou\app\src\main\res\drawable\ic_launcher_background.xml` 和 `ic_launcher_foreground.xml`
+   - 同时更新 `background.png`、`foreground.png`、`layered_image.json`
+
+2. **对话头像**：去掉 🐕 emoji，用实际图片头像
+   - 从 Android 工程复制 `preset_boris.png` 作为二狗默认头像
+   - 路径：`C:\Project\ergou\app\src\main\res\drawable\preset_boris.png`
+   - 在 `MessageBubble.ets`、`Index.ets`、`ChatPage.ets` 中替换 emoji 为图片
+
+3. **主色调**：从 iOS 蓝改为紫色系
+   - 主色：#7C4DFF（亮紫）
+   - 按钮/强调色：#651FFF
+   - 深色变体：#5C00E6
+   - 涉及文件：所有使用 #007AFF 的组件
+
+---
+
 ### [任务] @二狗A 适配新统计接口 + 新增记账图表
 - **日期**：2026-03-11
 - **发令**：二狗PM
