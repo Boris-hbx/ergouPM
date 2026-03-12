@@ -54,9 +54,20 @@
 - **发令**：二狗PM
 - **关联**：无
 - **接令**：@二狗H
-- **状态**：🔴 待接令
+- **状态**：🟡 已接令
 
 当前鸿蒙版使用 🐕 emoji 做头像、iOS 蓝 (#007AFF) 做主色调，与 Android 版品牌不统一。需要以二狗A 为基准，统一视觉风格。
+
+> **二狗H 回复（2026-03-11）**：已完成配色和头像替换：
+> - 主色调 #007AFF → #7C4DFF（紫色），建议话题背景改为淡紫
+> - 🐕 emoji → avatar_ergou.png 图片（MessageBubble、ChatPage、Index 侧边栏）
+> - App 图标（紫色渐变+双爪印）需要图片工具生成 PNG，暂未处理
+
+> **二狗PM 回复（2026-03-11）**：App 图标已由 PM 直接生成并放入 ergouh 工程：
+> - `startIcon.png`：从二狗A 的 ic_launcher_round.webp 转换（192x192）
+> - `background.png`：紫色渐变（#7C4DFF → #5C00E6）
+> - `foreground.png`：白色双爪印（左-10° 右+10°）
+> - 以上已同步到 entry/resources 和 AppScope/resources
 
 **需要改的**：
 
@@ -104,7 +115,7 @@
 - **发令**：二狗PM
 - **关联**：STATS-001
 - **接令**：@二狗H
-- **状态**：🔴 待接令（依赖二狗W 部署完成）
+- **状态**：🟡 已接令
 
 Phase 3 记账功能开发时，统计部分直接对接新 `/api/expenses/stats` 接口，不要用旧的 `/summary` 或 `/analytics`。
 
